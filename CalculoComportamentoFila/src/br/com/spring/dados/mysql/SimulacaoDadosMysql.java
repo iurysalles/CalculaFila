@@ -1,5 +1,6 @@
 package br.com.spring.dados.mysql;
 
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,6 +18,7 @@ import br.com.spring.dominio.Estatistica;
 import br.com.spring.dominio.Parametro;
 import br.com.spring.dominio.Simulacao;
 import br.com.spring.util.Constantes;
+import br.com.spring.util.ManipulaArquivos;
 
 public class SimulacaoDadosMysql implements ISimulacao{
 		
@@ -557,19 +559,25 @@ public class SimulacaoDadosMysql implements ISimulacao{
 	
 	private JdbcTemplate getJdbcTemplate() throws SQLException{
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		dataSource.setUsername("root");
 		
-
-		//PROD
-		//dataSource.setPassword("12345678");
-	    //dataSource.setUrl("jdbc:mysql://dbsimulafila.cgepkwykt1l8.us-west-2.rds.amazonaws.com:3306/simulafila");
+		try{
+		String className = ManipulaArquivos.getProp().getProperty(Constantes.JDBC_CLASS_NAME);
+		String url = ManipulaArquivos.getProp().getProperty(Constantes.JDBC_URL);
+		String user = ManipulaArquivos.getProp().getProperty(Constantes.JDBC_USER);
+		String password = ManipulaArquivos.getProp().getProperty(Constantes.JDBC_PASSWORD);
 		
-	    //DEV
-	    dataSource.setPassword("123456");
-	    dataSource.setUrl("jdbc:mysql://localhost/simulafila");
+		dataSource.setDriverClassName(className);
+		dataSource.setUrl(url);
+		dataSource.setUsername(user);
+		dataSource.setPassword(password);
 
 	    JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		return jdbcTemplate;
+	    
+	    return jdbcTemplate;
+	    
+		}catch(IOException e){
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

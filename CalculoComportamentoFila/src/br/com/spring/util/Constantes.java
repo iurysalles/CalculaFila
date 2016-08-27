@@ -31,4 +31,9 @@ public class Constantes {
 	public final static String NOME_PARAMETRO_CHEGADA = "valor_tempo_chegada_";
 	public final static String NOME_PARAMETRO_ATENDIMENTO = "valor_tempo_atendimento_";
 	
+	public final static String JDBC_CLASS_NAME= "jdbc.driverClassName";
+	public final static String JDBC_URL = "jdbc.url";
+	public final static String JDBC_USER = "jdbc.username";
+	public final static String JDBC_PASSWORD = "jdbc.password";
+	
 }
