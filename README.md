@@ -1,4 +1,4 @@
-# CalculaFila
+# Simula Fila
 Sistema para simulação de execução de Filas (Queue Theory)
 
 Sistema desenvolvido em JAVA para Monografia para Bacharel em Ciência da Computação
