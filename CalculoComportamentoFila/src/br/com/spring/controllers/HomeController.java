@@ -25,7 +25,6 @@ import br.com.spring.dominio.InputSimular;
 import br.com.spring.dominio.Parametro;
 import br.com.spring.dominio.ServerUtilization;
 import br.com.spring.dominio.Simulacao;
-import br.com.spring.dominio.Student;
 import br.com.spring.dominio.WaitingTime;
 import br.com.spring.servicos.ServicosDeCalculoComportamentoFila;
 import br.com.spring.servicos.ServicosDeDados;
@@ -41,13 +40,7 @@ public class HomeController {
 	@Autowired
 	private ServicosDeDados servicosDados;
 
-	@RequestMapping(value = "/index", method = RequestMethod.GET)
-	public ModelAndView student() {
-		return new ModelAndView("student", "command", new Student());
-	}
-	   
-	
-	
+
 	@RequestMapping(value = "/carregar", method = RequestMethod.GET)
 	public ModelAndView carregar(Model model) {
 		

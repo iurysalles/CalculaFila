@@ -270,14 +270,12 @@ public class ServicosDeCalculoComportamentoFila {
 		while(exponencial.cdf(x) < 1){
 			dist = new Distribuicao();
 			dist.setTempo(Double.valueOf(x));
-			dist.setProbabilidadeAcumulada(exponencial.cdf(x));
+			dist.setProbabilidadeAcumulada(Util.calculaProbabilidadeAcumuladaExponencial(x, lambda).doubleValue());
 			distribuicao.add(dist);
 			
 			x=x+0.001;
-			
-			
 		}
-		
+
 		distribuicao.add(new Distribuicao(x,exponencial.cdf(x)));
 		
 		return distribuicao;

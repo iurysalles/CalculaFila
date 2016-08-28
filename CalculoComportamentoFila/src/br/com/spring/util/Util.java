@@ -1,5 +1,7 @@
 package br.com.spring.util;
 
+import java.math.BigDecimal;
+
 
 
 public class Util {
@@ -26,14 +28,14 @@ public class Util {
 	 * @param x
 	 * @return função probabilidade de Exponencial
 	 */
-	public static double calculaProbabilidadeExponencial(double x, double lambda) {  
+	public static BigDecimal calculaProbabilidadeAcumuladaExponencial(double x, double lambda) {  
 	    try { 
 	    	if(x < 0)
-	    		return 0;
+	    		 return new BigDecimal(0);  
 	    	else
-	    		return Math.pow(Math.E*lambda, -lambda * x);
+	    		return (new BigDecimal(1).subtract(new BigDecimal(Math.pow(Math.E, -lambda*x))));
 	    } catch (Exception nfex) {  
-	        return 0;  
+	        return new BigDecimal(0);  
 	    }  
 	}
 	
@@ -58,9 +60,9 @@ public class Util {
 	 * @param x
 	 * @return função probabilidade de Erlang K
 	 */
-	public static double calculaProbabilidadeErlangk(int x, double lambda, int k) {  
+	public static double calculaProbabilidadeErlangk(double x, double lambda, int k) {  
 	    try {
-	        return (Math.pow(lambda,k)*Math.pow(x,k-1)*Math.pow(Math.E,-lambda*x))/factorial(k-1);
+	        return (Math.pow(lambda,k) * Math.pow(x,k-1) * Math.pow(Math.E,-lambda*x))/factorial(k-1);
 	    } catch (Exception nfex) {  
 	    	nfex.printStackTrace();
 	        return 0;  
