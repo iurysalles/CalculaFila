@@ -1,11 +1,13 @@
 package br.com.spring.util;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 
 
 
 public class Util {
-
+	static MathContext mc = new MathContext(2, RoundingMode.CEILING);
 
 	
 	/**
@@ -28,7 +30,7 @@ public class Util {
 	 * @param x
 	 * @return função probabilidade de Exponencial
 	 */
-	public static BigDecimal calculaProbabilidadeAcumuladaExponencial(double x, double lambda) {  
+	public static BigDecimal calculaCdfExponencial(double x, double lambda) {  
 	    try { 
 	    	if(x < 0)
 	    		 return new BigDecimal(0);  
@@ -60,12 +62,24 @@ public class Util {
 	 * @param x
 	 * @return função probabilidade de Erlang K
 	 */
-	public static double calculaProbabilidadeErlangk(double x, double lambda, int k) {  
+	public static BigDecimal calculaCdfErlangk(double x, double lambda, int k) {  
 	    try {
-	        return (Math.pow(lambda,k) * Math.pow(x,k-1) * Math.pow(Math.E,-lambda*x))/factorial(k-1);
+	    	BigDecimal x_1 = new BigDecimal(x);
+	    	BigDecimal lambda_1 = new BigDecimal(lambda);
+	    	BigDecimal sum = new BigDecimal(0);
+	    	BigDecimal termo1 = lambda_1.multiply(x_1);
+	    	BigDecimal e = new BigDecimal(Math.E);
+	    	BigDecimal termo2 = new BigDecimal( Math.pow(e.doubleValue(), -(termo1.doubleValue()))   );
+	    	BigDecimal um = new BigDecimal(1);
+	    	
+	    	for(int n=0;n<k;n++){
+	    		sum = sum.add(um.divide(new BigDecimal(factorial(n)),mc).multiply(termo2.multiply(termo1.pow(n))));	
+	    	}
+	    	
+	        return (um.subtract(sum));
 	    } catch (Exception nfex) {  
 	    	nfex.printStackTrace();
-	        return 0;  
+	        return BigDecimal.ZERO;  
 	    }  
 	}
 	

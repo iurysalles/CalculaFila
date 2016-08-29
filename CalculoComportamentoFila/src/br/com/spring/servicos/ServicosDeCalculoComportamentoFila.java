@@ -3,6 +3,7 @@ package br.com.spring.servicos;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -20,9 +21,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
-import umontreal.iro.lecuyer.probdist.ErlangDist;
-import umontreal.iro.lecuyer.probdist.ExponentialDist;
 import br.com.spring.dominio.Cliente;
 import br.com.spring.dominio.Distribuicao;
 import br.com.spring.dominio.Estatistica;
@@ -45,44 +43,6 @@ import br.com.spring.util.Util;
 @Service
 @Transactional
 public class ServicosDeCalculoComportamentoFila {
-
-	public double calculaOqueEuQuero(){
-		double sum = 0;
-		double temp = 0;
-		double constante = (Math.pow(10,12)/fatorial(12)) * (12/(12-10));
-		for(int i=0;i<12;i++){
-			temp = Math.pow(10,i)/ fatorial(i) + constante;
-			sum = sum + temp;
-			System.out.println("i:"+i+" valor:"+temp);
-		}
-		System.out.println("Soma:"+sum);
-		System.out.println("Sum-1: "+ Math.pow(sum,-1));
-		return sum;
-	}
-	
-	 public static int fatorial(int num) {
-
-
-	        /**
-	         * Este é o caso base, se o número passado por parametro for 0 ou 1,
-	         * ele retorna o resultado 1 e finaliza o método.
-	         */
-	        if (num <= 1) {
-
-	            return 1;
-
-	        } else {
-
-	            /**
-	             * chama o método fatorial novamente, mas dessa vez enviando como
-	             * parametro (n - 1).
-	             */
-	            
-	            return fatorial(num - 1) * num;
-
-	        }
-
-	    }
 	
 	/**
 	 * Processa a planilha
@@ -263,20 +223,18 @@ public class ServicosDeCalculoComportamentoFila {
 	public Collection<Distribuicao> calculaDistribuicaoExponencial(double lambda) throws Exception {
 		Collection<Distribuicao> distribuicao = new ArrayList<Distribuicao>();
 		Distribuicao dist = null;
-		ExponentialDist exponencial = new ExponentialDist(lambda);
 		
-		double x=0;
+		BigDecimal x = new BigDecimal(0);
 
-		while(exponencial.cdf(x) < 1){
+		while(Util.calculaCdfExponencial(x.doubleValue(), lambda).compareTo(new BigDecimal(0.99999999999999)) < 1){
 			dist = new Distribuicao();
-			dist.setTempo(Double.valueOf(x));
-			dist.setProbabilidadeAcumulada(Util.calculaProbabilidadeAcumuladaExponencial(x, lambda).doubleValue());
+			dist.setTempo(x.doubleValue());
+			dist.setProbabilidadeAcumulada(Util.calculaCdfExponencial(x.doubleValue(), lambda).doubleValue());
 			distribuicao.add(dist);
 			
-			x=x+0.001;
+			x= x.add(new BigDecimal(0.001));
 		}
 
-		distribuicao.add(new Distribuicao(x,exponencial.cdf(x)));
 		
 		return distribuicao;
 		
@@ -284,13 +242,8 @@ public class ServicosDeCalculoComportamentoFila {
 	
 	
 	
-	/**
-	 * Calcula distribuicao de Erlang k
-	 * 
-	 * @return Retorna uma colecao de distribuicoes  {@link Collection<Distribuicao>}
-	 * @throws ExcecaoDeServico
-	 */
-	public Collection<Distribuicao> calculaDistribuicaoErlangk(double lambda, Integer k) throws Exception {
+	
+	/*public Collection<Distribuicao> calculaDistribuicaoErlangk(double lambda, Integer k) throws Exception {
 		Collection<Distribuicao> distribuicao = new ArrayList<Distribuicao>();
 		Distribuicao dist = null;
 		double x=0;
@@ -301,6 +254,26 @@ public class ServicosDeCalculoComportamentoFila {
 			dist.setProbabilidadeAcumulada(erlang.cdf(x));
 			distribuicao.add(dist);
 			x=x+0.001;
+		}
+				
+		return distribuicao;
+	}*/
+	/**
+	 * Calcula distribuicao de Erlang k
+	 * 
+	 * @return Retorna uma colecao de distribuicoes  {@link Collection<Distribuicao>}
+	 * @throws ExcecaoDeServico
+	 */
+	public Collection<Distribuicao> calculaDistribuicaoErlangk(double lambda, Integer k) throws Exception {
+		Collection<Distribuicao> distribuicao = new ArrayList<Distribuicao>();
+		Distribuicao dist = null;
+		BigDecimal x= new BigDecimal(0);
+		while(Util.calculaCdfErlangk(x.doubleValue(), lambda, k).compareTo(new BigDecimal(0.99999999999999)) < 1){
+			dist = new Distribuicao();
+			dist.setTempo(x.doubleValue());
+			dist.setProbabilidadeAcumulada(Util.calculaCdfErlangk(x.doubleValue(), lambda, k).doubleValue());
+			distribuicao.add(dist);
+			x= x.add(new BigDecimal(0.001));
 		}
 				
 		return distribuicao;
@@ -974,6 +947,7 @@ public class ServicosDeCalculoComportamentoFila {
 	
 	private double geraOcorrenciasRandomAtendimento(Collection<Distribuicao> distribuicaoChegada){
 		double random = Math.random();
+		
 		ArrayList<Distribuicao> distribuicao = (ArrayList<Distribuicao>) distribuicaoChegada;
 		if(distribuicao.get(0).getTempo() == 0){
 			distribuicao.remove(0);
@@ -984,8 +958,8 @@ public class ServicosDeCalculoComportamentoFila {
 			if(random > distribuicao.get(i).getProbabilidadeAcumulada()) 
 				return distribuicao.get(i+1).getTempo();
 	    }
-		
 		return distribuicao.get(0).getTempo();
+		
 	}
 	
 	
