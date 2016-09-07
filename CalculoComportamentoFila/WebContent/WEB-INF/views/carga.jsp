@@ -126,7 +126,7 @@
 	        <br>
 	        
 			<div id="divTipoAtendimento">
-		        <label for="tipoAtendimento">Distribuição de Atendimento(S)</label>
+		        <label for="tipoAtendimento">Distribuição de Atendimento(B)</label>
 				<select class="form-control" id="tipoAtendimento" name="inputTipoAtendimento" required="required">
 					<option value="">Selecione</option>
 				    <option value="<%=Constantes.TIPO_DISTRIBUICAO_EXPONENCIAL%>">M ( Exponencial )</option>
@@ -173,7 +173,7 @@
 	        <br>
 	        
 			<div id="divTamanhoPopulacao">
-		        <label for="inputTamanhoPopulacao">Tamanho População(N)</label>
+		        <label for="inputTamanhoPopulacao">Tamanho População(n)</label>
 		        <input type="number" id="inputTamanhoPopulacao" class="form-control" placeholder="Tamanho da população" required="required" name="tamanhoPopulacao" min="0">
 	      		<label>
 	      			<input type="checkbox" id="checkInfinito"> Infinito
@@ -184,7 +184,7 @@
 	        <br>
 	        
 	        <div id="divTipoFila">
-		        <label for="tipoFila">Disciplina de Atendimento(Q)</label>
+		        <label for="tipoFila">Disciplina de Atendimento(D)</label>
 				<select class="form-control" id="tipoFila" name="inputTipoFila" required="required">
 				    <option value="<%=Constantes.TIPO_FILA_FIRST_COME_FIRST_SERVED%>">FCFS ( Primeiro a chegar, primeiro a ser servido )</option>
 				    <option value="<%=Constantes.TIPO_FILA_LAST_COME_FIRST_SERVED%>">LCFS (Último a chegar, primeiro a ser servido )</option>

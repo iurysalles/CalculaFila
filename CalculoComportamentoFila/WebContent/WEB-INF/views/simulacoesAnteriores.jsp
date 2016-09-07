@@ -95,10 +95,10 @@
 			        			<th>#</th>
 			        			<th>#</th>
 					            <th><span class="test" data-toggle="tooltip" title="Distribuição de Chegada">A</span></th>
-					            <th><span class="test" data-toggle="tooltip" title="Distribuição Atendimento">S</span></th>
-					            <th><span class="test" data-toggle="tooltip" title="Disciplina de Atendimento">Q</span></th>
+					            <th><span class="test" data-toggle="tooltip" title="Distribuição Atendimento">B</span></th>
+					            <th><span class="test" data-toggle="tooltip" title="Disciplina de Atendimento">D</span></th>
 					            <th><span class="test" data-toggle="tooltip" title="Numero Servidores">m</span></th>
-					            <th><span class="test" data-toggle="tooltip" title="Tamanho População">N</span></th>
+					            <th><span class="test" data-toggle="tooltip" title="Tamanho População">n</span></th>
 					            <th><span class="test" data-toggle="tooltip" title="Tempo">t</span></th>
 					            <th><span class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Excluir"></span></th>
 					</tr>
