@@ -86,7 +86,7 @@
 	       
 			<div id="divTipoEntrada">
 		        <label for="tipoEntrada">Distribuição de Chegada(A)</label>
-				<select class="form-control" id="tipoEntrada" name="inputTipoChegada" required="true">
+				<select class="form-control" id="tipoEntrada" name="inputTipoChegada" required="required">
 					<option value="">Selecione</option>
 				    <option value="<%=Constantes.TIPO_DISTRIBUICAO_EXPONENCIAL%>">M ( Exponencial )</option>
 				    <option value="<%=Constantes.TIPO_DISTRIBUICAO_DETERMINISTICO%>">D ( Determinístico )</option>
@@ -188,7 +188,7 @@
 				<select class="form-control" id="tipoFila" name="inputTipoFila" required="required">
 				    <option value="<%=Constantes.TIPO_FILA_FIRST_COME_FIRST_SERVED%>">FCFS ( Primeiro a chegar, primeiro a ser servido )</option>
 				    <option value="<%=Constantes.TIPO_FILA_LAST_COME_FIRST_SERVED%>">LCFS (Último a chegar, primeiro a ser servido )</option>
-				    <option value="<%=Constantes.TIPO_FILA_RANDOM%>">SIRO(Seleção Aleatória por serviço)</option>
+				    <option value="<%=Constantes.TIPO_FILA_RANDOM%>">RSS(Seleção Aleatória por serviço)</option>
 				</select>
 			</div>
 	        
@@ -204,7 +204,7 @@
 	        
         <div id="apps-bar-wrapper">
 			<a id="apps-bar-collapse" style="height: 44px;">
-				<span id="icone" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				<span id="icone" class="glyphicon glyphicon-chevron-right"></span>
 			</a>
 			<div id="apps-bar">
 				<div class="row reverse">

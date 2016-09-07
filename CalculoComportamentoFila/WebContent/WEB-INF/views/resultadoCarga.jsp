@@ -272,7 +272,7 @@
 					
 					<div id="apps-bar-wrapper">
 						<a id="apps-bar-collapse" style="height: 44px;">
-							<span id="icone" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+							<span id="icone" class="glyphicon glyphicon-chevron-right" ></span>
 						</a>
 						<div id="apps-bar">
 							<div class="row reverse">
