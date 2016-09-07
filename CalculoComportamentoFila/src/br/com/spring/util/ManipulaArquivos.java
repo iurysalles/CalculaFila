@@ -8,7 +8,7 @@ public class ManipulaArquivos {
 	public static Properties getProp() throws IOException {
 		Properties props = new Properties();
 		FileInputStream file = new FileInputStream(
-				"C:/Users/IURY/git/CalculaFila/git/CalculoComportamentoFila/properties/jdbc.properties");
+				"C:/Users/IURY/SimuladorFila/CalculoComportamentoFila/properties/jdbc.properties");
 		props.load(file);
 		return props;
 

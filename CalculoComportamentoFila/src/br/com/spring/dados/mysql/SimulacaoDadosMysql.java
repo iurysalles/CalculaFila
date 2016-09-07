@@ -1,6 +1,5 @@
 package br.com.spring.dados.mysql;
 
-import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +17,7 @@ import br.com.spring.dominio.Estatistica;
 import br.com.spring.dominio.Parametro;
 import br.com.spring.dominio.Simulacao;
 import br.com.spring.util.Constantes;
-import br.com.spring.util.ManipulaArquivos;
+import br.com.spring.util.ResourceBundleProperties;
 
 public class SimulacaoDadosMysql implements ISimulacao{
 		
@@ -559,12 +558,11 @@ public class SimulacaoDadosMysql implements ISimulacao{
 	
 	private JdbcTemplate getJdbcTemplate() throws SQLException{
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		
-		try{
-		String className = ManipulaArquivos.getProp().getProperty(Constantes.JDBC_CLASS_NAME);
-		String url = ManipulaArquivos.getProp().getProperty(Constantes.JDBC_URL);
-		String user = ManipulaArquivos.getProp().getProperty(Constantes.JDBC_USER);
-		String password = ManipulaArquivos.getProp().getProperty(Constantes.JDBC_PASSWORD);
+
+		String className = ResourceBundleProperties.getDriverClassName();
+		String url = ResourceBundleProperties.getUrlJdbc();
+		String user = ResourceBundleProperties.getUserName();
+		String password = ResourceBundleProperties.getPassword();
 		
 		dataSource.setDriverClassName(className);
 		dataSource.setUrl(url);
@@ -575,9 +573,6 @@ public class SimulacaoDadosMysql implements ISimulacao{
 	    
 	    return jdbcTemplate;
 	    
-		}catch(IOException e){
-			e.printStackTrace();
-			return null;
-		}
+
 	}
 }
